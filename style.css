@@ -1,0 +1,72 @@
+body {
+    background-image: url('https://cdn.hipwallpaper.com/i/92/22/vLH6EJ.gif');
+    padding-top: 30px;
+    /* padding: 0px; */
+}
+
+h3 {
+    margin-block-end: 0px;
+}
+
+#calculatorContainer {
+    width: 615px;
+    margin: 0 auto;
+    text-align: center;
+    border: 4px blue solid;
+    background-color: white;
+}
+
+#formulaDisplayText {
+    color: red;
+    font-family: 'Oxanium', monospace;
+    font-size: 20px;
+    margin: 5px;
+    padding-right: 5px;
+    text-align: right;
+    
+}
+
+#numberDisplayText {
+    font-family: 'Oxanium', monospace;
+    font-size: 35px;
+    margin: 5px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+#equalsButtonText {
+    height: 258px;
+    background-color: green;
+    padding-top: 110px;
+}
+
+#acButtonText{
+    background-color: red;
+}
+
+#buttonsContainer {
+    margin: 10px 20px 5px 20px;
+}
+
+.calcButtons {
+    padding: 0px;
+    margin: 0px;
+    color: white;
+    border: 4px solid white;
+}
+
+.buttonText {
+    font-family: 'Quicksand', sans-serif;
+    background-color: blue;
+    font-size: 35px;
+    height: 126px;
+    text-align: center;
+    padding-top: 45px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px darkgrey;
+}
+
+#signature {
+    color: blue;
+    font-family: 'Oxanium', monospace;
+}
