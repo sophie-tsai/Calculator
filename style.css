@@ -1,7 +1,7 @@
 body {
     background-image: url('https://cdn.hipwallpaper.com/i/92/22/vLH6EJ.gif');
     padding-top: 30px;
-    /* padding: 0px; */
+  
 }
 
 h3 {
@@ -9,36 +9,39 @@ h3 {
 }
 
 #calculatorContainer {
-    width: 615px;
+    max-width: 615px;
+    width: 70%;
     margin: 0 auto;
     text-align: center;
     border: 6px blue solid;
     background-color: white;
+    position: relative;
+    height: auto;
 }
 
 #formulaDisplayText {
     color: red;
     font-family: 'Oxanium', monospace;
-    font-size: 20px;
+    font-size: 2.9vh;
     margin: 5px;
     padding-right: 5px;
     text-align: right;
-    height: 24px;
+    height: 3vh;
 }
 
 #numberDisplayText {
     font-family: 'Oxanium', monospace;
-    font-size: 45px;
+    font-size: 5.9vh;
     margin: 5px;
     padding-right: 5px;
-    height: 54px;
+    height: 6vh;
     text-align: right;
 }
 
 #equalsButtonText {
-    height: 260px;
+    height: 37.5vh;
     background-color: green;
-    padding-top: 110px;
+    padding-top: 15vh;
 }
 
 #acButtonText{
@@ -47,23 +50,25 @@ h3 {
 
 #buttonsContainer {
     margin: 10px 20px 5px 20px;
+    /* width: 100%; */
+    /* padding-top: 100%; */
 }
 
 .calcButtonContainer {
     padding: 0px;
     margin: 0px;
     color: white;
-    border: 4px solid white;
+    border: .5vh solid white;
     
 }
 
 .buttonText {
     font-family: 'Quicksand', sans-serif;
     background-color: blue;
-    font-size: 35px;
-    height: 126px;
+    font-size: 5vh;
+    height: 18.3vh;
     text-align: center;
-    padding-top: 45px;
+    padding-top: 6vh;
     border-radius: 5px;
     box-shadow: 2px 2px 4px darkgrey;
     cursor: pointer;
@@ -72,4 +77,5 @@ h3 {
 #signature {
     color: blue;
     font-family: 'Oxanium', monospace;
+    margin: .5vh;
 }
