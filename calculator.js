@@ -17,12 +17,11 @@ function setup() {
     const numberDisplayText = document.querySelector('#numberDisplayText');
     numberDisplayText.innerText = 0;
     const formulaDisplayText = document.querySelector('#formulaDisplayText');
-
     const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
     for (let container of calcButtonContainers) {
         container.addEventListener('click', onButtonClick)
     }
-
+    hasDot = false;
 }
 
 setup();
@@ -54,8 +53,14 @@ function handleNumber(num) {
     //else, append digit
 }
 
+let hasDot = false;
 function handleDot() {
-
+if(hasDot){
+    return;
+} else {
+    numberDisplayText.innerText += ".";
+    hasDot = true;
+}
 }
 
 function handleOperator(operator) {
