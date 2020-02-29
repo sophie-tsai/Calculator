@@ -15,8 +15,9 @@
 let hasDot = false;
 function setup() {
     const numberDisplayText = document.querySelector('#numberDisplayText');
-    numberDisplayText.innerText = 0;
+    numberDisplayText.innerText = "0";
     const formulaDisplayText = document.querySelector('#formulaDisplayText');
+    formulaDisplayText.innerText = "";
     const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
     for (let container of calcButtonContainers) {
         container.addEventListener('click', onButtonClick);
@@ -40,6 +41,7 @@ function handleNumber(num) {
     //check if num is 0
     if (numberDisplayText.innerText === "0") {
         numberDisplayText.innerText = num;
+        matchDisplayText();
     } else {
         if (numberDisplayText.innerText.length >= 15) {
             maxDigits();
@@ -48,11 +50,15 @@ function handleNumber(num) {
             return;
         } else {
             numberDisplayText.innerText += num;
+            matchDisplayText();
         }
     }
     //else, append digit
 }
 
+function matchDisplayText() {
+    formulaDisplayText.innerText = numberDisplayText.innerText;
+}
 
 function handleDot() {
     if (hasDot) {
@@ -60,6 +66,7 @@ function handleDot() {
     } else {
         numberDisplayText.innerText += ".";
         hasDot = true;
+        matchDisplayText();
     }
 }
 
@@ -69,7 +76,7 @@ function handleOperator(operator) {
 
 function onButtonClick(event) {
     const value = event.srcElement.innerText;
-
+console.log(value);
     if (Number.isInteger(parseInt(value))) {
         handleNumber(value);
     } else if (value === '.') {

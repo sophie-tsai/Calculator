@@ -42,7 +42,7 @@ h3 {
 #equalsButtonText {
     height: 25vh;
     background-color: green;
-    padding-top: 12vh;
+    padding-top: 10vh;
 }
 
 #acButtonText{
@@ -77,6 +77,7 @@ h3 {
 #signature {
     color: blue;
     font-family: 'Oxanium', monospace;
+    font-size: 2vh;
     margin: .5vh;
 }
 
