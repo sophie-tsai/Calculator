@@ -12,14 +12,14 @@
 "use strict"
 
 //(function iife(){
-
+let hasDot = false;
 function setup() {
     const numberDisplayText = document.querySelector('#numberDisplayText');
     numberDisplayText.innerText = 0;
     const formulaDisplayText = document.querySelector('#formulaDisplayText');
     const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
     for (let container of calcButtonContainers) {
-        container.addEventListener('click', onButtonClick)
+        container.addEventListener('click', onButtonClick);
     }
     hasDot = false;
 }
@@ -38,29 +38,29 @@ function maxDigits() {
 let holdValue;
 function handleNumber(num) {
     //check if num is 0
-    if (numberDisplayText.innerText == 0) {
+    if (numberDisplayText.innerText === "0") {
         numberDisplayText.innerText = num;
     } else {
-        if (numberDisplayText.innerText.length > 21) {
+        if (numberDisplayText.innerText.length >= 15) {
             maxDigits();
             return;
-        } else if(numberDisplayText.innerText === "DIGIT LIMIT MET") {
+        } else if (numberDisplayText.innerText === "DIGIT LIMIT MET") {
             return;
-        }  else {
+        } else {
             numberDisplayText.innerText += num;
         }
     }
     //else, append digit
 }
 
-let hasDot = false;
+
 function handleDot() {
-if(hasDot){
-    return;
-} else {
-    numberDisplayText.innerText += ".";
-    hasDot = true;
-}
+    if (hasDot) {
+        return;
+    } else {
+        numberDisplayText.innerText += ".";
+        hasDot = true;
+    }
 }
 
 function handleOperator(operator) {

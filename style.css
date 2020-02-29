@@ -9,7 +9,7 @@ h3 {
 }
 
 #calculatorContainer {
-    max-width: 615px;
+    max-width: 30vw;
     width: 70%;
     margin: 0 auto;
     text-align: center;
@@ -36,12 +36,13 @@ h3 {
     padding-right: 5px;
     height: 6vh;
     text-align: right;
+    overflow-x: auto;
 }
 
 #equalsButtonText {
-    height: 37.5vh;
+    height: 25vh;
     background-color: green;
-    padding-top: 15vh;
+    padding-top: 12vh;
 }
 
 #acButtonText{
@@ -59,17 +60,16 @@ h3 {
     margin: 0px;
     color: white;
     border: .5vh solid white;
-    
 }
 
 .buttonText {
     font-family: 'Quicksand', sans-serif;
     background-color: blue;
     font-size: 5vh;
-    height: 18.3vh;
+    height: 12vh;
     text-align: center;
-    padding-top: 6vh;
-    border-radius: 5px;
+    padding-top: 3.5vh;
+    border-radius: 4px;
     box-shadow: 2px 2px 4px darkgrey;
     cursor: pointer;
 }
@@ -79,3 +79,12 @@ h3 {
     font-family: 'Oxanium', monospace;
     margin: .5vh;
 }
+
+
+/* 
+if the viewport width is less than ____, start shrinking the entire calculator while maintaining the aspect ratio
+if the viewport height is less than ____, start shrinking the entire calculator while maintaining the aspect ratio
+
+
+
+*/
