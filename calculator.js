@@ -12,7 +12,8 @@
 "use strict"
 
 //(function iife(){
-let hasDot = false;
+let hasDot;
+let isNegative;
 function setup() {
     const numberDisplayText = document.querySelector('#numberDisplayText');
     numberDisplayText.innerText = "0";
@@ -23,6 +24,7 @@ function setup() {
         container.addEventListener('click', onButtonClick);
     }
     hasDot = false;
+    isNegative = false;
 }
 
 setup();
@@ -41,7 +43,6 @@ function handleNumber(num) {
     //check if num is 0
     if (numberDisplayText.innerText === "0") {
         numberDisplayText.innerText = num;
-        matchDisplayText();
     } else {
         if (numberDisplayText.innerText.length >= 15) {
             maxDigits();
@@ -50,15 +51,12 @@ function handleNumber(num) {
             return;
         } else {
             numberDisplayText.innerText += num;
-            matchDisplayText();
         }
     }
     //else, append digit
 }
 
-function matchDisplayText() {
-    formulaDisplayText.innerText = numberDisplayText.innerText;
-}
+
 
 function handleDot() {
     if (hasDot) {
@@ -66,17 +64,30 @@ function handleDot() {
     } else {
         numberDisplayText.innerText += ".";
         hasDot = true;
-        matchDisplayText();
+
     }
 }
 
-function handleOperator(operator) {
 
+function handleOperator(operator) {
+    if (operator === "±") {
+        if (!isNegative) {
+            let numberDisplayArray = numberDisplayText.innerText.split("");
+            numberDisplayArray.unshift("-");
+            numberDisplayText.innerText = numberDisplayArray.join("");
+            isNegative = true;
+        } else {
+            let numberDisplayArray = numberDisplayText.innerText.split("");
+            numberDisplayArray.shift("-");
+            numberDisplayText.innerText = numberDisplayArray.join("");
+            isNegative = false
+        }
+    }
 }
 
 function onButtonClick(event) {
     const value = event.srcElement.innerText;
-console.log(value);
+    
     if (Number.isInteger(parseInt(value))) {
         handleNumber(value);
     } else if (value === '.') {
