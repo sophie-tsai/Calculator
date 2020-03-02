@@ -9,6 +9,12 @@
 5. if formula is illogical, then return NAN 
 */
 //use strings to store the numbers so you can concatanate/append the number
+
+
+// Bugs
+// digit limit met
+//sometimes using the negative toggler makes the number disappear
+
 "use strict"
 
 //(function iife(){
@@ -29,14 +35,34 @@ function setup() {
 
 setup();
 
-function maxDigits() {
-    holdValue = numberDisplayText.innerText;
-    numberDisplayText.innerText = "DIGIT LIMIT MET";
-    setTimeout(function () {
-        numberDisplayText.innerText = holdValue;
-    }, 2500
-    );
+
+function maxDigits(display) {
+    if (display === "number") {
+        
+        holdValue = numberDisplayText.innerText;
+        function clearDigitLimitMet() {
+            numberDisplayText.innerText = holdValue;
+        }
+        if(numberDisplayText.innerText === "DIGIT LIMIT MET"){
+            setTimeout(clearDigitLimitMet, 500);
+        } else {
+        numberDisplayText.innerText = "DIGIT LIMIT MET";
+        setTimeout(clearDigitLimitMet, 2000);
+        }
+    }
+    else {
+        holdValue = formulaDisplayText.innerText;
+        function clearDigitLimitMet() {
+            formulaDisplayText.innerText = holdValue;
+        }
+        if(formulaDisplayText.innerText === "DIGIT LIMIT MET"){
+            setTimeout(clearDigitLimitMet, 500);
+        } else
+        formulaDisplayText.innerText = "DIGIT LIMIT MET";
+        setTimeout(clearDigitLimitMet, 2000);
+    }
 }
+
 
 let holdValue;
 function handleNumber(num) {
@@ -44,10 +70,11 @@ function handleNumber(num) {
     if (numberDisplayText.innerText === "0") {
         numberDisplayText.innerText = num;
     } else {
-        if (numberDisplayText.innerText.length >= 15) {
-            maxDigits();
+        if (numberDisplayText.innerText.length >= 10) {
+            maxDigits("number");
             return;
         } else if (numberDisplayText.innerText === "DIGIT LIMIT MET") {
+            
             return;
         } else {
             numberDisplayText.innerText += num;
@@ -68,9 +95,15 @@ function handleDot() {
     }
 }
 
+const operators = ["+", "-", "/", "x"];
+//max length for formulaDisplayText.innerText should be 30
+
 
 function handleOperator(operator) {
     if (operator === "±") {
+        if (operators.includes(numberDisplayText.innerText)) {
+            return;
+        }
         if (!isNegative) {
             let numberDisplayArray = numberDisplayText.innerText.split("");
             numberDisplayArray.unshift("-");
@@ -79,17 +112,57 @@ function handleOperator(operator) {
         } else {
             let numberDisplayArray = numberDisplayText.innerText.split("");
             numberDisplayArray.shift("-");
+            console.log(numberDisplayArray);
             numberDisplayText.innerText = numberDisplayArray.join("");
             isNegative = false
         }
+    } else if (operator === "AC") {
+        setup();
+    } else if (operator) {
+
+        clearAndReplace(operator);
     }
+}
+
+function clearAndReplace(operator) {
+    if (operators.includes(numberDisplayText.innerText)) {
+        //check to see if there's an operator there, if there is then replace, not append
+        numberDisplayText.innerText = operator;
+        let formulaDisplayArray = formulaDisplayText.innerText.split("");
+        formulaDisplayArray.pop();
+        formulaDisplayArray.push(operator);
+        formulaDisplayText.innerText = formulaDisplayArray.join("");
+        return;
+    }
+    numberDisplayText.innerText += operator;
+    appendNumberDisplay();
+    numberDisplayText.innerText = operator;
+
+}
+
+function appendNumberDisplay() {
+    if (formulaDisplayText.innerText.length >= 25) {
+        maxDigits("formula");
+        return;
+    } else if (formulaDisplayText.innerText === "DIGIT LIMIT MET") {
+        
+        return;
+    }
+
+    formulaDisplayText.innerText += numberDisplayText.innerText;
 }
 
 function onButtonClick(event) {
     const value = event.srcElement.innerText;
-    
+
     if (Number.isInteger(parseInt(value))) {
+        //if an operator has been pressed then replace the operator
+        if (operators.includes(numberDisplayText.innerText)) {
+            numberDisplayText.innerText = "";
+
+        }
         handleNumber(value);
+
     } else if (value === '.') {
         handleDot();
     } else {

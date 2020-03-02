@@ -31,10 +31,10 @@ h3 {
 
 #numberDisplayText {
     font-family: 'Oxanium', monospace;
-    font-size: 5.9vh;
+    font-size: 6.5vh;
     margin: 5px;
     padding-right: 5px;
-    height: 6vh;
+    height: 6.5vh;
     text-align: right;
     overflow-x: auto;
 }
