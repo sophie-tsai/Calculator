@@ -12,9 +12,10 @@
 
 
 // Bugs
-// digit limit met
-//sometimes using the negative toggler makes the number disappear
-//when digit limit met is displayed, ignore all other inputs
+
+//when pressing an operator and then =, it appends it?
+//when pressing plus, it double appends the number?
+
 
 "use strict"
 
@@ -31,11 +32,14 @@ function setup() {
         container.addEventListener('click', onButtonClick);
     }
     hasDot = false;
-    isNegative = false;
+    resetToPositive();
 }
 
 setup();
 
+function resetToPositive() {
+    isNegative = false;
+}
 
 function maxDigits(display) {
     if (display === "number") {
@@ -57,115 +61,138 @@ function maxDigits(display) {
         formulaDisplayText.innerText = "DIGIT LIMIT MET";
         setTimeout(clearDigitLimitMet, 2000);
     }
-    }
+}
 
-    let holdValue;
+let holdValue;
 
-    function handleNumber(num) {
-        //check if num is 0
-        if (numberDisplayText.innerText === "0") {
-            numberDisplayText.innerText = num;
-        } else {
-            if (numberDisplayText.innerText === "DIGIT LIMIT MET") {
+function handleNumber(num) {
+    //check if num is 0
+    if (formulaDisplayText.innerText.includes("=")) {
+        formulaDisplayText.innerText = num;
+        numberDisplayText.innerText = num;
+    } else if (numberDisplayText.innerText === "0") {
+        numberDisplayText.innerText = num;
+    } else {
+        if (numberDisplayText.innerText === "DIGIT LIMIT MET") {
 
-                return;
-            } else if (numberDisplayText.innerText.length >= 10) {
-                maxDigits("number");
-                return;
-            } else {
-                numberDisplayText.innerText += num;
-            }
-        }
-        //else, append digit
-    }
-
-
-
-    function handleDot() {
-        if (hasDot) {
+            return;
+        } else if (numberDisplayText.innerText.length >= 10) {
+            maxDigits("number");
             return;
         } else {
-            numberDisplayText.innerText += ".";
-            hasDot = true;
-
+            numberDisplayText.innerText += num;
         }
     }
+    //else, append digit
+}
 
-    const operators = ["+", "-", "/", "x"];
-    //max length for formulaDisplayText.innerText should be 30
+function handleDot() {
+    if (hasDot) {
+        return;
+    } else {
+        numberDisplayText.innerText += ".";
+        hasDot = true;
+
+    }
+}
+
+const operators = ["+", "-", "/", "*"];
+//max length for formulaDisplayText.innerText should be 30
 
 
-    function handleOperator(operator) {
-        if(numberDisplayText.innerText === "DIGIT LIMIT MET") {
+
+function handleOperator(operator) {
+    if (numberDisplayText.innerText === "DIGIT LIMIT MET") {
+        return;
+    }
+    if (operator === "±") {
+        if (operators.includes(numberDisplayText.innerText)) {
             return;
         }
-        if (operator === "±") {
-            if (operators.includes(numberDisplayText.innerText)) {
-                return;
-            }
-            if (!isNegative) {
-                let numberDisplayArray = numberDisplayText.innerText.split("");
-                numberDisplayArray.unshift("-");
-                numberDisplayText.innerText = numberDisplayArray.join("");
-                isNegative = true;
-            } else {
-                let numberDisplayArray = numberDisplayText.innerText.split("");
-                numberDisplayArray.shift("-");
-                console.log(numberDisplayArray);
-                numberDisplayText.innerText = numberDisplayArray.join("");
-                isNegative = false
-            }
-        } else if (operator === "AC") {
-            setup();
-        } else if (operator) {
+        if (!isNegative) {
+            let numberDisplayArray = numberDisplayText.innerText.split("");
+            numberDisplayArray.unshift("-");
+            numberDisplayText.innerText = numberDisplayArray.join("");
+            isNegative = true;
 
+        } else {
+            let numberDisplayArray = numberDisplayText.innerText.split("");
+            numberDisplayArray.shift("-");
+            numberDisplayText.innerText = numberDisplayArray.join("");
+            isNegative = false;
+
+        }
+    } else if (operator === "AC") {
+        setup();
+    } else if (operator === "=") {
+
+        resetToPositive();
+
+        if (!formulaDisplayText.innerText.includes("=")) {
+            //if "=" hasn't already been passed then evaluate the formula
+            appendNumberDisplay();
+            const formulaAnswer = eval(formulaDisplayText.innerText);
+
+            formulaDisplayText.innerText = formulaDisplayText.innerText + "=" + formulaAnswer;
+            numberDisplayText.innerText = formulaAnswer;
+        }
+    } else if (operator) {
+        if (formulaDisplayText.innerText.includes("=")) {
+            formulaDisplayText.innerText = numberDisplayText.innerText + operator;
+            numberDisplayText.innerText = operator;
+
+        } else {
             clearAndReplace(operator);
         }
     }
 
-    function clearAndReplace(operator) {
-        if (operators.includes(numberDisplayText.innerText)) {
-            //check to see if there's an operator there, if there is then replace, not append
-            numberDisplayText.innerText = operator;
-            let formulaDisplayArray = formulaDisplayText.innerText.split("");
-            formulaDisplayArray.pop();
-            formulaDisplayArray.push(operator);
-            formulaDisplayText.innerText = formulaDisplayArray.join("");
-            return;
-        }
-        numberDisplayText.innerText += operator;
-        appendNumberDisplay();
+}
+
+function clearAndReplace(operator) {
+    resetToPositive();
+    if (operators.includes(numberDisplayText.innerText)) {
+        //check to see if there's an operator there, if there is then replace, not append
         numberDisplayText.innerText = operator;
-
+        let formulaDisplayArray = formulaDisplayText.innerText.split("");
+        formulaDisplayArray.pop();
+        formulaDisplayArray.push(operator);
+        formulaDisplayText.innerText = formulaDisplayArray.join("");
+        return;
     }
+    numberDisplayText.innerText += operator;
+    appendNumberDisplay();
+    numberDisplayText.innerText = operator;
 
-    function appendNumberDisplay() {
-        if (formulaDisplayText.innerText === "DIGIT LIMIT MET") {
-            return;
-        } else if (formulaDisplayText.innerText.length >= 25) {
-            maxDigits("formula");
-            return;
+}
+
+function appendNumberDisplay() {
+    //do not append if digit limit met
+    if (formulaDisplayText.innerText === "DIGIT LIMIT MET") {
+        return;
+    } else if (formulaDisplayText.innerText.length >= 25) {
+        maxDigits("formula");
+        return;
+    }
+    formulaDisplayText.innerText += numberDisplayText.innerText;
+}
+
+function onButtonClick(event) {
+    const value = event.srcElement.innerText;
+
+    if (Number.isInteger(parseInt(value))) {
+        //if an operator has been pressed then replace the operator
+        if (operators.includes(numberDisplayText.innerText)) {
+            numberDisplayText.innerText = "";
+
         }
-        formulaDisplayText.innerText += numberDisplayText.innerText;
+        handleNumber(value);
+
+    } else if (value === '.') {
+        handleDot();
+    } else {
+        handleOperator(value);
     }
-
-    function onButtonClick(event) {
-        const value = event.srcElement.innerText;
-
-        if (Number.isInteger(parseInt(value))) {
-            //if an operator has been pressed then replace the operator
-            if (operators.includes(numberDisplayText.innerText)) {
-                numberDisplayText.innerText = "";
-
-            }
-            handleNumber(value);
-
-        } else if (value === '.') {
-            handleDot();
-        } else {
-            handleOperator(value);
-        }
-    }
+}
 
 
 //})();
