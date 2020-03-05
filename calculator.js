@@ -13,7 +13,7 @@
 
 // Bugs
 
-//when pressing an operator and then =, it appends it?
+
 //when pressing plus, it double appends the number?
 
 
@@ -68,7 +68,7 @@ let holdValue;
 function handleNumber(num) {
     //check if num is 0
     if (formulaDisplayText.innerText.includes("=")) {
-        formulaDisplayText.innerText = num;
+        formulaDisplayText.innerText = "";
         numberDisplayText.innerText = num;
     } else if (numberDisplayText.innerText === "0") {
         numberDisplayText.innerText = num;
@@ -89,7 +89,10 @@ function handleNumber(num) {
 function handleDot() {
     if (hasDot) {
         return;
-    } else {
+    } else if (operators.includes(numberDisplayText.innerText)) {
+        return;
+    }
+    else {
         numberDisplayText.innerText += ".";
         hasDot = true;
 
@@ -127,7 +130,9 @@ function handleOperator(operator) {
     } else if (operator === "=") {
 
         resetToPositive();
-
+        if (operators.includes(numberDisplayText.innerText)) {
+            return;
+        }
         if (!formulaDisplayText.innerText.includes("=")) {
             //if "=" hasn't already been passed then evaluate the formula
             appendNumberDisplay();
@@ -169,7 +174,7 @@ function appendNumberDisplay() {
     //do not append if digit limit met
     if (formulaDisplayText.innerText === "DIGIT LIMIT MET") {
         return;
-    } else if (formulaDisplayText.innerText.length >= 25) {
+    } else if (formulaDisplayText.innerText.length >= 20) {
         maxDigits("formula");
         return;
     }

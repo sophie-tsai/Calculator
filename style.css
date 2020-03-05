@@ -9,8 +9,8 @@ h3 {
 }
 
 #calculatorContainer {
-    max-width: 30vw;
-    width: 70%;
+    max-width: 50vh;
+    /* width: 100%; */
     margin: 0 auto;
     text-align: center;
     border: 6px blue solid;
@@ -27,6 +27,7 @@ h3 {
     padding-right: 5px;
     text-align: right;
     height: 3vh;
+    overflow-x: auto;
 }
 
 #numberDisplayText {
