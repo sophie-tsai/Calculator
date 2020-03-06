@@ -4,9 +4,16 @@
 let hasDot;
 let isNegative;
 const DIGIT_LIMIT_MET_MSG = "DIGIT LIMIT MET";
+
+
+const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
+
 setup();
 
 function setup() {
+    const numberDisplayText = document.querySelector('#numberDisplayText');
+    const formulaDisplayText = document.querySelector('#formulaDisplayText');
+    const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
     for (let container of calcButtonContainers) {
         container.addEventListener('click', onButtonClick);
     }
@@ -14,11 +21,8 @@ function setup() {
 }
 
 function reset() {
-    const numberDisplayText = document.querySelector('#numberDisplayText');
     numberDisplayText.innerText = "0";
-    const formulaDisplayText = document.querySelector('#formulaDisplayText');
     formulaDisplayText.innerText = "";
-    const calcButtonContainers = document.querySelectorAll(".calcButtonContainer");
     hasDot = false;
     resetToPositive();
 }
@@ -41,12 +45,15 @@ function handleDot() {
         return;
     }
     if (operators.has(numberDisplayText.innerText)) {
+        numberDisplayText.innerText = "0.";
+        hasDot = true;
         return;
-        // TODO fix bug
     }
     if (formulaDisplayText.innerText.includes("=")) {
+        formulaDisplayText.innerText = "";
+        numberDisplayText.innerText = "0.";
+        hasDot = true;
         return;
-        // TODO fix bug
     }
     numberDisplayText.innerText += ".";
     hasDot = true;
@@ -129,17 +136,11 @@ function toggleNegative() {
         return;
     }
     if (isNegative) {
-        // TODO make this into 1 liner .replace, then flex
-        let numberDisplayArray = numberDisplayText.innerText.split("");
-        numberDisplayArray.shift("-");
-        numberDisplayText.innerText = numberDisplayArray.join("");
+        numberDisplayText.innerText = numberDisplayText.innerText.replace("-", "");
         isNegative = false;
         return;
     }
-    // TODO see if we can make this into 1 liner
-    let numberDisplayArray = numberDisplayText.innerText.split("");
-    numberDisplayArray.unshift("-");
-    numberDisplayText.innerText = numberDisplayArray.join("");
+    numberDisplayText.innerText = "-" + numberDisplayText.innerText;
     isNegative = true;
 }
 
@@ -163,14 +164,10 @@ function evaluate() {
 function clearAndReplace(operator) {
     resetToPositive();
     if (operators.has(numberDisplayText.innerText)) {
-        //check to see if there's an operator there, if there is then replace, not append
-
-        // TODO make this into 1 liner .replace, then FLEX
+        //replaces the previous operator with new one
         numberDisplayText.innerText = operator;
-        let formulaDisplayArray = formulaDisplayText.innerText.split("");
-        formulaDisplayArray.pop();
-        formulaDisplayArray.push(operator);
-        formulaDisplayText.innerText = formulaDisplayArray.join("");
+        const previousOperator = formulaDisplayText.innerText[formulaDisplayText.innerText.length - 1]
+        formulaDisplayText.innerText = formulaDisplayText.innerText.replace(previousOperator, operator);
         return;
     }
     numberDisplayText.innerText += operator;
