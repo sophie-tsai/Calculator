@@ -1,6 +1,6 @@
 "use strict"
 
-//(function iife(){
+(function iife(){
 let hasDot;
 let isNegative;
 const DIGIT_LIMIT_MET_MSG = "DIGIT LIMIT MET";
@@ -188,4 +188,4 @@ function appendNumberDisplay() {
     formulaDisplayText.innerText += numberDisplayText.innerText;
 }
 
-//})();
+})();
