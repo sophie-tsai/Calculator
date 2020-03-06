@@ -16,7 +16,8 @@ h3 {
     border: 6px blue solid;
     background-color: white;
     position: relative;
-    height: auto;
+    /* height: auto; */
+    /* min-height: 600px; */
 }
 
 #formulaDisplayText {
