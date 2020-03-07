@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-(function iife(){
+(function (){
 let hasDot;
 let isNegative;
 const DIGIT_LIMIT_MET_MSG = "DIGIT LIMIT MET";
@@ -119,16 +119,15 @@ function resetToPositive() {
 }
 
 function maxDigits(display) {
-    const CLEAR_TIME = 2000;
+    let displayToUpdate;
     if (display === "number") {
-        const holdValue = numberDisplayText.innerText;
-        numberDisplayText.innerText = DIGIT_LIMIT_MET_MSG;
-        setTimeout(() => numberDisplayText.innerText = holdValue, CLEAR_TIME);
+        displayToUpdate = numberDisplayText;
     } else {
-        const holdValue = formulaDisplayText.innerText;
-        formulaDisplayText.innerText = DIGIT_LIMIT_MET_MSG;
-        setTimeout(() => formulaDisplayText.innerText = holdValue, CLEAR_TIME);
+        displayToUpdate = formulaDisplayText;
     }
+    const holdValue = displayToUpdate.innerText;
+    displayToUpdate.innerText = DIGIT_LIMIT_MET_MSG;
+    setTimeout(() => displayToUpdate.innerText = holdValue, 2000);
 }
 
 function toggleNegative() {
