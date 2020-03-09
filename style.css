@@ -27,8 +27,9 @@ h3 {
     margin: 5px;
     padding-right: 5px;
     text-align: right;
-    height: 3vh;
+    height: 3.1vh;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #numberDisplayText {
@@ -39,6 +40,7 @@ h3 {
     height: 6.5vh;
     text-align: right;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #equalsButtonText {
