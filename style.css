@@ -10,14 +10,13 @@ h3 {
 
 #calculatorContainer {
     max-width: 50vh;
-    /* width: 100%; */
+    
     margin: 0 auto;
     text-align: center;
     border: 6px blue solid;
     background-color: white;
     position: relative;
-    /* height: auto; */
-    /* min-height: 600px; */
+   
 }
 
 #formulaDisplayText {
