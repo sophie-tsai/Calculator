@@ -10,3 +10,4 @@ See it live [here](https://sophie-tsai.github.io/Calculator/).
 - [Drum Kit](https://sophie-tsai.github.io/Drum-Kit/)
 - [Number Game](https://sophie-tsai.github.io/Number-Game/)
 - [To-Do List](https://sophie-tsai.github.io/To-Do-List/)
+- [Higher or Lower?](https://sophie-tsai.github.io/Higher-Lower/)
